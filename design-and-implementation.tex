@@ -4,3 +4,33 @@
 % - rating and voting
 % - code screenshots
 % - LoC + code coverage stats
+
+This chapter discusses the design principles and implementation details of the system described in the previous chapter. This work took a prototyping approach to get to a functioning prototype rapidly and improve from there. The sections below we explain the different functionalities that were tackled in chronological order.
+
+\section{Module Distribution}
+
+The first step that was taken to undertake this project was module distribution. Distribution was chosen as the idea hinges on the ability to setup an integrated content distribution network that would work efficiently and scale. Since this is not the first time this is done and there already exist excellent solutions out there that could accomplish this. Below I will list the different protocols considered.
+
+\subsection{TFTP}
+Trivial File Transfer Protocol (TFTP) is a very simple and old file transfer protocol. It is mostly used in older enterprise equipment and is not really used anymore today. This has to due with the downsizes of the protocol in that it has no security built-in and has no verification that the content has arrived intact.
+
+\subsection{FTP(S)}
+File Transfer Protocol is a newer protocol than TFTP, but still older than the other alternatives. This protocol is mostly used for transferring content to web servers. For that purpose this protocol functions well because it is lightweight, provides content verification, and is simple. The downside for our use-case is that it isn't secure by default (gets routed through a HTTPS connection), doesn't support file transfer resumes, and doesn't scale well.
+
+\subsection{Web protocols}
+
+Web protocols like HyperText Transfer Protocol (HTTP) and its secure variant HTTPS are a very common transfer protocol in the current day internet. It is used by all major Linux distribution to distribute the system packages, by websites for downloading content and watching videos. This protocol supports file transfer resumes, encryption. It, However, doesn't scale well when the same content has to be uploaded to multiple users and doesn't natively provide content verification.
+
+\subsection{BitTorrent}
+
+BitTorrent is the protocol used by all bittorrent clients. It provides encryption, content verification, file transfer resumes and scales very well when large amounts of the same contents has to be distributed thanks to its mesh architecture.
+
+\section{Discovery and Voting protocol}
+
+\section{Module Design}
+
+\section{Event-Driven Architecture}
+
+\section{GUI integration}
+
+\section{Code review}
