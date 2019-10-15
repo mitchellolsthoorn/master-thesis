@@ -11,21 +11,29 @@ This chapter discusses the design principles and implementation details of the s
 
 The first step that was taken to undertake this project was module distribution. Distribution was chosen as the idea hinges on the ability to setup an integrated content distribution network that would work efficiently and scale. Since this is not the first time this is done and there already exist excellent solutions out there that could accomplish this. Below I will list the different protocols considered.
 
-\subsection{TFTP}
+\subsection{Protocols}
+\subsubsection{\textbf{TFTP}}
 Trivial File Transfer Protocol (TFTP) is a very simple and old file transfer protocol. It is mostly used in older enterprise equipment and is not really used anymore today. This has to due with the downsizes of the protocol in that it has no security built-in and has no verification that the content has arrived intact.
 
-\subsection{FTP(S)}
+\subsubsection{\textbf{FTP(S)}}
 File Transfer Protocol is a newer protocol than TFTP, but still older than the other alternatives. This protocol is mostly used for transferring content to web servers. For that purpose this protocol functions well because it is lightweight, provides content verification, and is simple. The downside for our use-case is that it isn't secure by default (gets routed through a HTTPS connection), doesn't support file transfer resumes, and doesn't scale well.
 
-\subsection{Web protocols}
+\subsubsection{\textbf{Web protocols}}
 
 Web protocols like HyperText Transfer Protocol (HTTP) and its secure variant HTTPS are a very common transfer protocol in the current day internet. It is used by all major Linux distribution to distribute the system packages, by websites for downloading content and watching videos. This protocol supports file transfer resumes, encryption. It, However, doesn't scale well when the same content has to be uploaded to multiple users and doesn't natively provide content verification.
 
-\subsection{BitTorrent}
+\subsubsection{\textbf{BitTorrent}}
 
-BitTorrent is the protocol used by all bittorrent clients. It provides encryption, content verification, file transfer resumes and scales very well when large amounts of the same contents has to be distributed thanks to its mesh architecture.
+BitTorrent is the protocol used by all bittorrent clients. It provides encryption, content verification, file transfer resumes, and scales very well when large amounts of the same contents has to be distributed thanks to its mesh architecture. That is why this protocol was selected as the basis of the module distribution of this work.
+
+\subsection{Module transfer protocol}
+Several small experiments were conducted to test the feasibility of the BitTorrent protocol with the regards to this work its use-case. These were related to choosing a suitable BitTorrent implementation, testing the creation of a torrent and downloading this just created torrent on multiple other nodes. We made use of magnet links to transfer the information required to download the torrent. Ones these experiments were deemed successful, we had to find a way to distribute this magnet link through the network without using the traditional method of content indexing services. The method that we chose is described in the discovery section.
 
 \section{Discovery and Voting protocol}
+
+When a suitable transfer protocol is chosen, the next step was to make it possible for modules to be discoverable by all nodes in the system. Since we were already building our framework on top of the IPv8 peer-to-peer communication library. We decided it would be a good fit to use this to accomplish our goal, since it was very suited for bulk small size data gossiping. So this became out chosen method of module discovery.
+
+Since IPv8 also provides a block-chain storage back-end it was an perfect opportunity to 
 
 \section{Module Design}
 
