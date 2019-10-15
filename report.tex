@@ -1,0 +1,56 @@
+\documentclass[whitelogo]{tudelft-report}
+\usepackage{natbib}
+\usepackage{changes}
+\begin{document}
+
+\frontmatter
+
+%% Uncomment following 19 lines for a cover with a picture on the lower half only
+%\title[tudelft-white]{A unified framework for developer modules and user plug-ins}
+%\subtitle[tudelft-cyan]{}
+%\author[tudelft-white]{M. J. G. Olsthoorn}
+%\affiliation{Technische Universiteit Delft}
+%\coverimage{cover.jpg}
+%\titleoffsetx{10cm}
+%\titleoffsety{10cm}
+%\afiloffsetx{1cm}
+%\afiloffsety{18cm}
+%\covertext[tudelft-white]{
+%}
+%\makecover
+
+%% Uncomment following 16 lines for a cover with a picture on the lower half only
+\title[tudelft-white]{\Huge{A unified framework for developer modules and user plug-ins}}
+\subtitle[tudelft-black]{}
+\author[tudelft-white]{\huge{M. J. G. Olsthoorn}}
+\affiliation{Technische Universiteit Delft}
+\coverimage{tank.jpg}
+\covertext[tudelft-white]{
+}
+\setpagecolor{tudelft-cyan}
+\makecover[split]
+
+
+%% Include an optional title page.
+\input{title}
+
+\input{preface}
+
+\input{abstract}
+
+\tableofcontents
+
+%% Use Arabic numerals for the page numbers of the chapters.
+\mainmatter
+
+\input{content}
+
+%% Use letters for the chapter numbers of the appendices.
+\appendix
+
+%\input{appendix-a}
+
+\bibliography{report}
+
+\end{document}
+

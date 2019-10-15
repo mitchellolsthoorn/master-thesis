@@ -1,0 +1,44 @@
+\chapter{Problem description}
+
+% - we need a unified framework for developer modules and user plug-ins
+% - beyond state-of-the-art requirements:
+%   - crowdsourcing of code
+%   - source code inspection
+%   - trust function
+%   - live overlay
+%   - dynamic loading
+%   - runtime-upgrades
+%   - developers communities around micro-services
+%   - owned by everybody and nobody, no central servers (self-governance)
+% - show the viability of our ideas with a non-trivial use-case
+
+Currently the Tribler application, consists out of a monolithic 120k lines of code that has been developed over the last 13 years by various researches, developers, and students. Through its many development phases and limited time projects, the application has become unmaintainable and unmanageable. The application incorporates the main components of torrent client and many different sub projects that are used for research. This creates a difficult environment to work in as the code base is very complex resulting in a learning curve of many months to years for the core components. This complexity also causes code to be duplicated and rewritten multiple times across the lifespan of the project.
+
+This work sets out to create a unified framework for reusable developer modules and user plug-ins built on top of IPv8.
+
+\section{Scope}
+The work is focusing on the specific use-case and problems of the application Tribler. It will not provide a universal solution to the problem of re-usability. This work will also not be tackling the problem of managing external dependencies like language dependencies and system dependencies.
+
+This work will limit itself to the underlying platform used by Tribler, IPv8 and its language (Python).
+
+\section{Requirements}
+To realize this idea we have set out the following requirements with the client:
+
+\begin{itemize}
+	\item \textbf{Crowdsourcing of code: } There should be no difference between modules and plug-ins. Everyone that wants to participate can create and add functionality to the application. Each user can also choose which functionality and therefore module they want to run on their instance of the application. This allows users to compose their own desired version of the application.
+	\item \textbf{Source code inspection: } To make sure that users won't be running undesired malicious code. All modules will be inspected by making use of crowd-sourcing and trust-ability.
+	\item \textbf{Trust function: } To determine how trust is created each user can download and select a trust function that corresponds with their view of what trust entails.
+	\item \textbf{Live overlay: } All modules will be distributed across the network of users of the framework.
+	\item \textbf{Dynamic loading: } When a modules is selected it should be downloaded and loaded into the application dynamically. Meaning the user should not have to reload the application for the new functionality to work.
+	\item \textbf{Runtime-upgrades: } When new versions of modules will be published to fix bugs or add functionality, the module will automatically be distributed, downloaded, and loaded on the users system.
+	\item \textbf{Developer communities around micro-services: } Each user can compose larger modules out of smaller ones or fork modules to represent their view on how it should be done. This should create a community around each module that could spark an ecosystem.
+	\item \textbf{Self-governance: } The network should be owned by everybody and nobody. It should have no central servers (except for bootstrap) and be able to run on its own without supervision.
+\end{itemize}
+
+We will show the viability of the idea proposed in this work with a non-trivial use-case.
+
+\section{Related work}
+In the introduction, several related works were already mentioned. Ecosystems like Debian Package System, were one of the first big system that made use of reusable components on a large scale. It faced some of the same issues with dependencies but operates with central components and lacks source code inspection or user contribution. Another one of the mentioned systems was NPM. Node Package Manager is a highly reusable library manager for javascript modules. It, however, also makes use of central components and faces issues with dependency management.
+
+Related work of plugins can be found in products like WinAmp. Which is a very famous old media player, which created the first community of contributing users around an application. These kinds of systems are also very popular in games, where they can be seen implemented all over. These systems, however, focus purely on the user contributing part and don't tackle the other requirements/issues mentioned. 
+
