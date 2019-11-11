@@ -1,5 +1,43 @@
 \chapter{\label{sec:design}Design}
 
+%trusted execution through openness, crowdsourcing, and voting (e.g. Ethereum VM)
+%NodeJS == social trust
+%Github == social
+%Solidity == ?
+%Event-based architecture
+%Internet-based (live overlay)
+%any-platform (even including Android, GUI framework; thus only common denominator: HTML)
+%network availability
+%module identifier promotes trust
+%Voting
+%double vote detection by checking the blockchain
+%Modules search for dependencies downwards
+%View layer triggers search for logic layer
+%Logic layer triggers search for other logic layer
+%After search they register with the higher module
+%Module abstracts classes for registration mechanism
+%Module distribution mechanism
+%Send message to all neighbours when voting
+%Send message to random neighbour every x time units to keep modules circulating
+%Random sending based on votes, lifetime, reputation
+%Each nodes downloads module to increase availability in the network
+%After x time units unused/unstored modules get deleted
+%Mention malicious nodes
+%Track of module is used to determine if it can be deleted
+%Find different module versions by module identifier
+%crawl neighbour nodes
+%Modules
+%Modules should have votes per version to prevent major code changes
+%Code should be viewable
+%Version number is hash code to prevent version tempering
+%Each module has own pub key for identifier
+%Decide to keep author in module identifier
+%Decide if each version should be a separate module, has downsides to upgrade speed
+%Key value store for storing settings in dependent modules
+%Execution
+%Docker runner
+%Local runner
+
 % code review, trust, untrusted code execution, dynamic module loading, dependencies loading
 
 This chapter will expand on the design of the proposed framework. It will elaborate on the high-level structures within the application. The implementation considerations and details will be discussed in Chapter~\ref{sec:implementation}. The evaluation of the framework through an experiment will be  done in Chapter~\ref{sec:experimentation-and-evaluation}.

@@ -1,56 +1,65 @@
-\documentclass[whitelogo]{tudelft-report}
+\documentclass{tudelft-report}
+% Options:
+% dutch - for a Dutch report
+% print - for a print version
+% draft - for locating problem areas
+% nativefonts - override automatic font selection
+
 \usepackage{natbib}
+\usepackage{lipsum}
 \usepackage{changes}
+\usepackage{csquotes}
+\usepackage{setspace}
+\usepackage{mathtools}
+\usepackage{todonotes}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{pifont}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{green}{RGB}{50,205,50}
+\definecolor{red}{RGB}{178,34,34}
+\definecolor{orange}{RGB}{255,165,0}
+\newcommand{\itemcolor}[1]{% Update list item colour
+  \renewcommand{\makelabel}[1]{\color{#1}\hfil ##1}}
+
 \begin{document}
 
+%% Use Roman numerals for the page numbers of the title pages and table of
+%% contents.
 \frontmatter
 
+\newcommand\TITLE{\fontsize{40}{60}\selectfont}
+
 %% Uncomment following 19 lines for a cover with a picture on the lower half only
-%\title[tudelft-white]{A unified framework for developer modules and user plug-ins}
-%\subtitle[tudelft-cyan]{}
-%\author[tudelft-white]{M. J. G. Olsthoorn}
-%\affiliation{Technische Universiteit Delft}
-%\coverimage{cover.jpg}
-%\titleoffsetx{10cm}
-%\titleoffsety{10cm}
-%\afiloffsetx{1cm}
-%\afiloffsety{18cm}
-%\covertext[tudelft-white]{
-%}
-%\makecover
-
-%% Uncomment following 16 lines for a cover with a picture on the lower half only
-\title[tudelft-white]{\Huge{A unified framework for developer modules and user plug-ins}}
-\subtitle[tudelft-black]{}
-\author[tudelft-white]{\huge{M. J. G. Olsthoorn}}
-\affiliation{Technische Universiteit Delft}
-\coverimage{tank.jpg}
+\title[tudelft-white]{\TITLE{FBase:}}
+\subtitle[tudelft-cyan]{The next evolution of modularised code execution\\}
+\author[tudelft-white]{M.J.G. Olsthoorn}
+\affiliation{Technische Universiteit Delft - Master thesis}
+\coverimage{cover.jpg}
 \covertext[tudelft-white]{
+    \textbf{Cover Text}
 }
-\setpagecolor{tudelft-cyan}
-\makecover[split]
-
+\makecover[whitelogo]
 
 %% Include an optional title page.
 \input{title}
-
-\input{preface}
-
-\input{abstract}
-
+\input{chapters/00_preface}
+\input{chapters/00_abstract}
 \tableofcontents
 
 %% Use Arabic numerals for the page numbers of the chapters.
 \mainmatter
+    \input{content}
 
-\input{content}
+%% bibliography
+\renewcommand\bibname{References}
+\bibliography{references}
 
-%% Use letters for the chapter numbers of the appendices.
+    %% Use letters for the chapter numbers of the appendices.
 \appendix
-
-%\input{appendix-a}
-
-\bibliography{report}
+    \input{content_appendix}
+    \newpage\null\thispagestyle{empty}\newpage
 
 \end{document}
-

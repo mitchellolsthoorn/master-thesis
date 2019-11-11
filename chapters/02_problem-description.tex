@@ -1,5 +1,92 @@
 \chapter{Problem description}
 
+% dependency trend is risky, developers trust more code with less justification for doing so.
+% Still no good solution for code re-use
+
+%define modules vs plug-in
+%devise a software re-usability framework
+%validate this with real-world complexity
+%you solve world software problem, no mention of Tribler yet
+%make broader
+%Tribler is merely an example / possible application
+%many people tried, proven to be a hard problem
+%trade-off re-usability and usability
+%we propose a new balance between the two.
+%yet another learning attempt
+%our unique requirements: ToDo into a Related Work table (red and green ticks)
+%Related work:
+%similair
+%https://www.kickscondor.com/on-dat/
+%https://dymaxion.org/essays/briarvision.html
+%https://code.briarproject.org/briar/briar/commits/master/bramble-core/src/main/java/org/briarproject/bramble/BrambleCoreModule.java
+%
+%Trust
+%https://news.ycombinator.com/item?id=18824923
+%
+%Software reusability
+%https://queue.acm.org/detail.cfm?id=3344149
+%https://en.wikipedia.org/wiki/Lehman%27s_laws_of_software_evolution
+%https://link.springer.com/article/10.1007/s12599-017-0510-4
+%Software modular
+%https://doi.org/10.1145/210376.210389
+%http://www.potaroo.net/ispcol/2018-06/10years.html
+%
+%Euthereum (smart contracts)
+%https://medium.com/moatcoin/eth-gas-26d221c5c4c2
+%universal modules
+%https://github.com/umdjs/umd
+%https://www.semanticscholar.org/paper/Power-Management-for-Portable-Devices-Pouwelse/180e5b6ac7f4c8c5028985526c0249a3e16fbc75/figure/53
+%http://home.wangjianshuo.com/mvm/001157.htm
+%Java OSGi or Java 9 native modules
+%untrusted code execution
+%https://harry.garrood.me/blog/malicious-code-in-purescript-npm-installer/
+%https://lwn.net/Articles/740157/
+%https://blog.cloudflare.com/cloudflare-architecture-and-how-bpf-eats-the-world/
+%https://news.ycombinator.com/item?id=19947970
+%https://arstechnica.com/information-technology/2018/06/backdoored-images-downloaded-5-million-times-finally-removed-from-docker-hub/
+%
+%live code injection
+%https://pyrasite.readthedocs.io/en/latest/GUI.html
+%https://en.wikipedia.org/wiki/Kpatch
+%
+%
+%modules vs plugins
+%Strong encapsulation: hide implementation details inside components, leading to low coupling between different parts. Teams can work in isolation on decoupled parts of the system.
+%Well-defined interfaces: you can’t hide everything (or else your system won’t do anything meaningful), so well-defined and stable APIs between components are a must. A component can be replaced by any implementation that conforms to the interface specification.
+%Rest is not ideal for this, native code is better
+%Interfaces can't be fixed since application could be anything
+%Explicit dependencies: having a modular system means distinct components must work together. You’d better have a good way of expressing (and verifying) their relationships.
+%usability
+%decentralised
+%near-zero transaction costs
+%self maintaining
+%trustability
+%modular
+%separated view layer
+%social control system
+%we need a unified framework for developer modules and user plug-ins
+%beyond state-of-the-art requirements:
+%crowdsourcing of code
+%source code inspection
+%trust function
+%live overlay
+%dynamic loading
+%runtime-upgrades
+%developers communities around micro-services
+%owned by everybody and nobody, no central servers (self-governance)
+%show the viability of our ideas with a non-trivial use-case
+%Idea: runtime-import("Bittorrent-SHA1");
+%GUI solution for interaction?
+%runtime addition of GUI elements, screens, requester prompts and popups.
+%Usable with QT5, Kivy, Java or need for a domain-specific language: DApp-GUI?
+%Showstopper, for instance, need to compile QT5 for iOS when distributed in objective C.
+%Google to the rescue with Flutter
+%Future sprints: Dart Hello World from inside swarm
+%Downloads all DApps by default upto 10MByte maximum and seed
+%Solve availability problem, but only vote if source code is reviewed and approved
+%Future sprints: only download and seed if sufficient votes are cast (DDoS)
+%Future sprints: multiple trust functions
+
 % - we need a unified framework for developer modules and user plug-ins
 % - beyond state-of-the-art requirements:
 %   - crowdsourcing of code
