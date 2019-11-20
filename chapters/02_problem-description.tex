@@ -1,131 +1,110 @@
 \chapter{Problem description}
-
-% dependency trend is risky, developers trust more code with less justification for doing so.
 % Still no good solution for code re-use
 
-%define modules vs plug-in
-%devise a software re-usability framework
+% plugin vs module vs micro-service vs middleware
+
 %validate this with real-world complexity
-%you solve world software problem, no mention of Tribler yet
-%make broader
-%Tribler is merely an example / possible application
-%many people tried, proven to be a hard problem
-%trade-off re-usability and usability
-%we propose a new balance between the two.
-%yet another learning attempt
 %our unique requirements: ToDo into a Related Work table (red and green ticks)
-%Related work:
-%similair
-%https://www.kickscondor.com/on-dat/
-%https://dymaxion.org/essays/briarvision.html
-%https://code.briarproject.org/briar/briar/commits/master/bramble-core/src/main/java/org/briarproject/bramble/BrambleCoreModule.java
 %
-%Trust
-%https://news.ycombinator.com/item?id=18824923
-%
-%Software reusability
-%https://queue.acm.org/detail.cfm?id=3344149
-%https://en.wikipedia.org/wiki/Lehman%27s_laws_of_software_evolution
-%https://link.springer.com/article/10.1007/s12599-017-0510-4
-%Software modular
-%https://doi.org/10.1145/210376.210389
-%http://www.potaroo.net/ispcol/2018-06/10years.html
-%
+
+This work sets out to create a framework for the next evolution of modularized code execution to find a balance between software re-usability and usability. The key property is permission-less code execution at near-zero cost.
+
+There should be no difference between modules and plug-ins. Each user can also choose which functionality and therefore module they want to run on their instance of the application. This allows users to compose their own desired version of the application. The user can compose larger modules out of smaller ones or fork modules to represent their view on how it should be done. This should create a community around each module that could spark an ecosystem.
+
+This framework attempts to solve the problems that exist in the software practices of today. One of these software practices is the microservice architecture. This architecture like explained in the introduction breaks an application up into a collection of loosely coupled services. However, this pattern was specifically designed for maximizing re-usability without taking into account usability~\cite{newman2015building} . Studies have been done into the practical issues that the microservice architecture creates when used in a software application~\cite{dragoni2017microservices}. Examples of these issues are the manageability of packages on NPM, no explicit dependencies, interfaces that are not well defined. The architecture makes use of completely decoupled services that communicate through REST APIs. This interface, however, limits the type of communication that can be send between the nodes.
+
+Smart contracts, in particular, Euthereum is another software practice used today, to solve the problem of code re-usability. However, since Euthereum is based on a proof-of-work principle, it requires payment so execute actions on the system. This will make applications build on top of Euthereum subject to these charges. In many cases these charges will have the consequence that the application would be to expensive to use in practice. The Ethereum model is not long-term sustainable
 %Euthereum (smart contracts)
 %https://medium.com/moatcoin/eth-gas-26d221c5c4c2
-%universal modules
-%https://github.com/umdjs/umd
-%https://www.semanticscholar.org/paper/Power-Management-for-Portable-Devices-Pouwelse/180e5b6ac7f4c8c5028985526c0249a3e16fbc75/figure/53
-%http://home.wangjianshuo.com/mvm/001157.htm
-%Java OSGi or Java 9 native modules
-%untrusted code execution
+%IPv8 runtime model versus Ethereum fundamental brokenness (e.g. scalability and cost). :
+%Back in October’17, an investor sent 1,700 ETH to a contract (AirSwapDEX) with a gas price
+%of 400,000 Gwei and gas limit of 592,379. The Tx failed for some odd reason but the
+%investor was charged whopping 236 ETH (\$122,086 as per today’s price)
+%"Trustchain does not have a native cybercurrency such as Ethereum, it provides a transaction recording ledger". 
+%cite: https://medium.com/moatcoin/eth-gas-26d221c5c4c2
+
+\section{Decentralized}
+No central entity or central governance should be in control of the network. The network should be owned by everybody and nobody. The system should have no central servers except for bootstrapping. 
+
+\section{Self-governing}
+The system should be able to run on its own without supervision. As there is no parent governing entity. The system should be able to handle all tasks needed for operating the network by itself.
+
+\section{Trustworthy Code}
+
 %https://harry.garrood.me/blog/malicious-code-in-purescript-npm-installer/
 %https://lwn.net/Articles/740157/
 %https://blog.cloudflare.com/cloudflare-architecture-and-how-bpf-eats-the-world/
 %https://news.ycombinator.com/item?id=19947970
 %https://arstechnica.com/information-technology/2018/06/backdoored-images-downloaded-5-million-times-finally-removed-from-docker-hub/
-%
-%live code injection
+
+Since this work is proposing a framework that is highly dependent on re-usable code, it is important that the user running the application can trust all its parts. This trust aspects is very important for a code execution ecosystem. There are many examples of application being compromised by running untrusted code~\cite{purescript}\cite{docker}.
+
+\subsection{Open Ecosystem}
+For a user to trust the application it wants to run, it also needs to trust the framework running it. That is why it is important that every part of the code execution ecosystem is open for inspection. Making the source code public allows users or external parties to verify the behavior of the system. 
+
+Next to opening up the framework for inspection, it is also of vital importance that each re-usable component used within the framework is able to be inspected to increase the trustworthiness of the code.
+
+\subsection{Crowdsourcing}
+DevID is a previous work of the authors of this thesis. It evaluates the possibility of using social trust as a way to increase the trustworthiness of code by using crowdsourced peer-review~\cite{de2019devid}.
+
+Cargo Crev is a cryptographically verifiable code review system for the cargo (Rust) package manager~\cite{cargocrev}. It lets users cryptographically sign packages when they have deemed them to be safe.
+
+Both of these systems make use of crowdsourcing to minimize the risk of users running undesired malicious code. This is a very important property, since manually inspecting all code running in an application can take a lot of time. By crowdsourcing this task to other individuals, the trustworthiness might be lower compared reviewing it yourself. However, because the code review is crowdsourced to many different individuals, the eventual trustworthiness of the code will be higher.  
+
+\subsection{Dependencies}
+The current dependency trend is risky, developers trust more code with less justification for doing so. Since the recent explosion of code re-use systems, application have started shifting to using more and more existing libraries in the form of dependencies. This rapid shift, however, has caused developers to take along their perspective on code trustworthiness of classical dependencies like OS system libraries. The trust-ability of these new libraries is not as obvious as most developers believe.
+
+H2020 FASTEN is a project that strives to minimize the risk associated with using dependencies~\cite{fasten}. It solution for this problem is performing static analysis of the code and creating a dependency graph. With this dependency graph, changes to the dependency can be detected. This allows inspection of the code that would be affected by this change.
+
+When using dependencies without inspection, applications risk running code that contains bugs or has security exploits. Next to this, when the author of the dependency decides to change the purpose of their dependency or remove it entirely, the depending application becomes broken and useless. A study done by Xavier et al, has looked into the impact of breaking changes in dependencies~\cite{xavier2017historical}. They determined it poses a great risk to application, since the frequency of breaking changes and the impact are high in many cases.
+
+Although Semantic Versioning is a system designed to indicate to developers when breaking changes have been made to the dependency, the system is not being used properly according to recent studies~\cite{raemaekers2014semantic}~\cite{raemaekers2017semantic}. Raemaekers et al, found that backward-incompatible changes are widespread in software libraries.
+
+\subsection{Trust Function}
+Trustworthy code is a cornerstone in software development. However, how is trust defined? Trust is a social notion. One person might need more or less information to trust a particular piece of code than another person. This is highly dependent on the social constructs of the user. Therefore, trust shouldn't be a fixed concept. Each user should be able to define a trust function that is used to determine if a dependency should be used or not.
+
+\section{Runtime Engine}
+
+To run an application, composed of modules, inside the code execution framework, a runtime engine is needed. This runtime engine is responsible for all tasks related to running of modules.
+
+\subsection{Integrated autonomous dissemination}
+
+Centralized systems store all code libraries in one or multiple central locations. These locations require a lot of infrastructure which is not free. Besides this, they also have a few downsides. One of these downsides is that these locations are susceptible to influence of governments. They can be blocked or shutdown when the government feels like the platform is not complying with its laws. Decentralized systems do not have this disadvantage. Another disadvantage of centralized library storage is that any library made by revoked at any time.
+
+A system that has integrated autonomous dissemination of code libraries through decentralized methods, can not be controlled from outside the system. It also allows everything to be done from inside the framework making is easier to use.
+
+\subsection{Dynamic Loading}
+
+For the code execution framework to be easy to use, the user should not have to restart the application or load applications into the framework. This should be done automatically on-demand by the framework. Dynamic loading would also make sure that only the application that should be running are loaded into the system, so that unused applications will not waste computer resources.
+
 %https://pyrasite.readthedocs.io/en/latest/GUI.html
 %https://en.wikipedia.org/wiki/Kpatch
-%
-%
-%modules vs plugins
-%Strong encapsulation: hide implementation details inside components, leading to low coupling between different parts. Teams can work in isolation on decoupled parts of the system.
-%Well-defined interfaces: you can’t hide everything (or else your system won’t do anything meaningful), so well-defined and stable APIs between components are a must. A component can be replaced by any implementation that conforms to the interface specification.
-%Rest is not ideal for this, native code is better
-%Interfaces can't be fixed since application could be anything
-%Explicit dependencies: having a modular system means distinct components must work together. You’d better have a good way of expressing (and verifying) their relationships.
-%usability
-%decentralised
-%near-zero transaction costs
-%self maintaining
-%trustability
-%modular
-%separated view layer
-%social control system
-%we need a unified framework for developer modules and user plug-ins
-%beyond state-of-the-art requirements:
-%crowdsourcing of code
-%source code inspection
-%trust function
-%live overlay
-%dynamic loading
-%runtime-upgrades
-%developers communities around micro-services
-%owned by everybody and nobody, no central servers (self-governance)
-%show the viability of our ideas with a non-trivial use-case
-%Idea: runtime-import("Bittorrent-SHA1");
-%GUI solution for interaction?
-%runtime addition of GUI elements, screens, requester prompts and popups.
-%Usable with QT5, Kivy, Java or need for a domain-specific language: DApp-GUI?
-%Showstopper, for instance, need to compile QT5 for iOS when distributed in objective C.
-%Google to the rescue with Flutter
-%Future sprints: Dart Hello World from inside swarm
-%Downloads all DApps by default upto 10MByte maximum and seed
-%Solve availability problem, but only vote if source code is reviewed and approved
-%Future sprints: only download and seed if sufficient votes are cast (DDoS)
-%Future sprints: multiple trust functions
 
-% - we need a unified framework for developer modules and user plug-ins
-% - beyond state-of-the-art requirements:
-%   - crowdsourcing of code
-%   - source code inspection
-%   - trust function
-%   - live overlay
-%   - dynamic loading
-%   - runtime-upgrades
-%   - developers communities around micro-services
-%   - owned by everybody and nobody, no central servers (self-governance)
-% - show the viability of our ideas with a non-trivial use-case
+\subsection{Seamless Upgrading}
 
-Currently the Tribler application, consists out of a monolithic 120k lines of code that has been developed over the last 13 years by various researches, developers, and students. Through its many development phases and limited time projects, the application has become unmaintainable and unmanageable. The application incorporates the main components of torrent client and many different sub projects that are used for research. This creates a difficult environment to work in as the code base is very complex resulting in a learning curve of many months to years for the core components. This complexity also causes code to be duplicated and rewritten multiple times across the lifespan of the project.
+Updating of dependencies is very important. Outdated dependencies that contain security exploits can seriously harm the system it is running on. So when a new version of a dependency is available on the network, it should automatically be distributed to all nodes that run applications depending on that dependency. There should be no user action required for the updating to happen. Once the dependency is available on the host computer, it should do an in-place replacement of the dependency in the framework.
 
-This work sets out to create a unified framework for reusable developer modules and user plug-ins built on top of IPv8.
+A similar system has been proposed by Rellermeyer et al for Java OSGi modules~\cite{rellermeyer2008consistently}. In this paper, they devise a mechanism to extend the default functionality of OSGi modules to make it possible to upgrade them when used in a distributed method.
 
-\section{Scope}
-The work is focusing on the specific use-case and problems of the application Tribler. It will not provide a universal solution to the problem of re-usability. This work will also not be tackling the problem of managing external dependencies like language dependencies and system dependencies.
+\subsection{Module Interconnect}
 
-This work will limit itself to the underlying platform used by Tribler, IPv8 and its language (Python).
+For applications to be built up out of modules, there has to be a way for modules to find each other and to communicate with each other. The way this connection is constructed is very important, since the code execution architecture defines the maximum complexity of the code that can be produced. JVM, Nodejs, CPAN perl modules and other real-world framework and the connection between modules determine the Maximum Complexity of Applications (MCA) which a single company, an global consortium, or open source community can create. We devised the first architecture to take the MCA as the cardinal design optimisation. Science what defines MCA? What constrains/boosts MCA? The interconnection fabric is the key determinant for the MCA. How data flows between modules, how the future-proofing is arranges, how any piece of code can interconnect with any other code, and how can we devise the universal module interconnector?
 
-\section{Requirements}
-To realize this idea we have set out the following requirements with the client:
-
+To optimize the MCA some properties of the interconnection fabric have to hold:
 \begin{itemize}
-	\item \textbf{Crowdsourcing of code: } There should be no difference between modules and plug-ins. Everyone that wants to participate can create and add functionality to the application. Each user can also choose which functionality and therefore module they want to run on their instance of the application. This allows users to compose their own desired version of the application.
-	\item \textbf{Source code inspection: } To make sure that users won't be running undesired malicious code. All modules will be inspected by making use of crowd-sourcing and trust-ability.
-	\item \textbf{Trust function: } To determine how trust is created each user can download and select a trust function that corresponds with their view of what trust entails.
-	\item \textbf{Live overlay: } All modules will be distributed across the network of users of the framework.
-	\item \textbf{Dynamic loading: } When a modules is selected it should be downloaded and loaded into the application dynamically. Meaning the user should not have to reload the application for the new functionality to work.
-	\item \textbf{Runtime-upgrades: } When new versions of modules will be published to fix bugs or add functionality, the module will automatically be distributed, downloaded, and loaded on the users system.
-	\item \textbf{Developer communities around micro-services: } Each user can compose larger modules out of smaller ones or fork modules to represent their view on how it should be done. This should create a community around each module that could spark an ecosystem.
-	\item \textbf{Self-governance: } The network should be owned by everybody and nobody. It should have no central servers (except for bootstrap) and be able to run on its own without supervision.
+	\item Strong encapsulation: hide implementation details inside components, leading to low coupling between different parts. Teams can work in isolation on decoupled parts of the system.
+	\item Well-defined interfaces: you can’t hide everything (or else your system won’t do anything meaningful), so well-defined and stable APIs between components are a must. A component can be replaced by any implementation that conforms to the interface specification. Rest is not ideal for this, native code is better Interfaces can't be fixed since application could be anything
+	\item Explicit dependencies: having a modular system means distinct components must work together. You’d better have a good way of expressing (and verifying) their relationships.
 \end{itemize}
 
-We will show the viability of the idea proposed in this work with a non-trivial use-case.
+Currently, there are some attempts at creating a universal module. One of these attempts is UMD. Universal Module Definition (UMD) strives to create a module that can run on all platforms, e.g. browser, nodeJS, that run JavaScript. UMD, however, doesn't have to deal with a lot of complexities since the interface on all platforms are almost identical and JavaScript has a common pattern for interconnection modules. Another platform that is trying to create a universal module is Java's OSGi. This platform allows modules conforming to the standard to be used interchangeably with other modules. 
 
-\section{Related work}
-In the introduction, several related works were already mentioned. Ecosystems like Debian Package System, were one of the first big system that made use of reusable components on a large scale. It faced some of the same issues with dependencies but operates with central components and lacks source code inspection or user contribution. Another one of the mentioned systems was NPM. Node Package Manager is a highly reusable library manager for javascript modules. It, however, also makes use of central components and faces issues with dependency management.
+%universal modules
+%https://github.com/umdjs/umd
+%https://www.semanticscholar.org/paper/Power-Management-for-Portable-Devices-Pouwelse/180e5b6ac7f4c8c5028985526c0249a3e16fbc75/figure/53
+%http://home.wangjianshuo.com/mvm/001157.htm
+%Java OSGi or Java 9 native modules or JavaScript got a module system as of ES2015
 
-Related work of plugins can be found in products like WinAmp. Which is a very famous old media player, which created the first community of contributing users around an application. These kinds of systems are also very popular in games, where they can be seen implemented all over. These systems, however, focus purely on the user contributing part and don't tackle the other requirements/issues mentioned. 
+% protocols should be lightweight.
+
 

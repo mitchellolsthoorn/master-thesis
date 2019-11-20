@@ -1,118 +1,101 @@
 \chapter{Introduction}
 
 %intro to title and topic (start broad and work down to more detail. Try to captivate the reader)
+For decades software re-use has been seen as the holy grail of software development. Even in the eighties, papers were already written about this topic~\cite{standish1984essay}. Throughout the years, more and more research has been done on the benefit of re-usable software~\cite{jacobson1997software}. Studies have also been done on how to re-use software in practice~\cite{reifer1997practical}. But up until recently, there was more discussion about software re-use than actual software re-use. Even though most software uses the same blocks of code over and over again, almost all software is built from the ground up~\cite{frakes2005software}. Today, this situation is completely different. Nowadays, almost every application re-uses software in the form of software dependencies. However, this re-use pattern is starting to become unchecked. The shift to re-usable software has happened so quickly, the risks associated with choosing the right dependencies are often overlooked~\cite{cox2019surviving}. 
 
-For decades software re-use has been seen as the holy grail of software development. Even in the eighties, papers were already written about this topic~\cite{standish1984essay}. Throughout the years, more and more research has been done on the benefit of re-usable software~\cite{jacobson1997software}. Studies have also been done on how to reuse software in practice~\cite{reifer1997practical}. But up until recently, there was more discussion about software reuse than actual software reuse. Despite the fact that most software uses the same blocks of code over and over again, almost all software is built from the ground up~\cite{frakes2005software}. Today, this situation is completely different. Nowadays, almost every application re-uses software in the form of software dependencies. However, this re-use pattern is starting to become unchecked. The shift to re-usable software has happened so quickly, the risks associated with choosing the right dependencies are often overlooked~\cite{cox2019surviving}. 
-
-
-
-%why (personal interest and interest for general use)
-%Another attempt at holy Grail of software re-usability
 %Describe the topic and scope of your research
-
-% intro on problem of code re-use, software reusability+user-extensible software
-
-%This thesis focuses its work on a project called Tribler and its underlying network library IPv8.
-%This thesis focuses its work on developing a framework that continues the progression in the development of reusable and modular code. It tries to find a balance between the software practices of Today and the impractical concepts of the future.
-
-
-%\section{Tribler}
-%
-%% Project focuses on project called Tribler. Community driven. Big code base.
-%
-%Tribler is an open-source community driven decentralized BitTorrent client being developed and researched at the Delft university of Technology. Its main feature is that is allows anonymous peer-to-peer communication by default. It is built on the underlaying network library IPv8, also being worked on by the same group.
-%
-%Besides handling the tasks of a standard BitTorrent client, Tribler also makes it possible to:
-%
-%\begin{itemize}
-%	\item \textbf{Search for content: } allowing the program to operate independently of external content search providers that could be blocked and maked it immune to limiting external actions such as legal constraints. Which is happening more frequently nowadays.
-%	\item \textbf{Torrent anonymously: } routing torrent traffic through anonymized tunnels that operate using the same principle as the TOR stack. Providing pseudo-anonymity for the two end and other observing parties.
-%	\item \textbf{Accumulate trust: } all torrenting metadata is stored in a way that is not linked to an physical identity or an IP address. This data is then translated into a trust score by calculating the ratio between the amount of traffic communicated across the network. A positive seed ratio (the ratio between uploading content and downloading content) indicated a positive trust value.
-%	\item \textbf{Trade trust: } With this trust system it is possible to prioritize or refuse services for particular users. To increase the incentive for having a large seeder network and therefore a high trust value, Tribler allows users with a large amount of uploaded content to exchange this gathered trust for currency on the built-in marketplace inside the Tribler application.
-%\end{itemize}
-%
-%This trust value, expressed as reputation inside the Tribler application, can be described as an up- and download currency in a reputation-based peer-to-peer network. When a peer uploads more than it downloads, the reputation of that peer increases, and the peer can download more effectively.
-%
-%\section{IPv8}
-%
-%IPv8 is the underlying network framework of the Tribler application. It is responsible for providing \textbf{authenticated} and \textbf{encrypted} communication between different peers (computer nodes) in the system. The framework abstracts the notion of physical addresses (IP addresses) in favour of public keys. This removes the need for application that use this framework to keep track of where different peers in the system are and how to move data between them. IPv8 simplifies the design of distributed overlay systems. 
-%
-%Some other important aspects of the framework are its focus on:
-%\begin{itemize}
-%	\item \textbf{Privacy:} where it is possible to choose if messages should be identifiable to all peers in the network or only to the peers absolutely needed for the network connection (doesn't include the receiver). 
-%	\item \textbf{No infrastructure dependency:} allowing the network to function on its own run by the peers using the system. This is a very important aspect of the framework as it allows the framework to support itself, without needing external financing for server capacity.
-%	\item \textbf{NAT traversal:} making it possible to operate the network without static servers needed for overcoming the NAT issues that most peer-to-peer networks face.
-%	\item \textbf{Trust:} one of the most important aspects of peer-to-peer systems, as it is needed to mitigate free-riding issues in the network. In IPv8 trust is gained by recording a patterns of previous actions and storing these on a blockchain structure called TrustChain.
-%\end{itemize}
-%
-%The last main aspect of the framework is \textbf{extensibility}. IPv8 makes use of a concept called overlays. Where a virtual network is created in the system related to one specific application domain or topic where different peers can subscribe to. This is a very powerful mechanism to allow extendability and modularization of an specific application.
-
 \section{Code Evolution}
-Over the years, the way we use code has evolved with the changing need of the users and the society as a whole~\cite{rajlich2014software}. This evolution started off with specific applications written for each use case and each platform it had to run on. These application took a lot of time to develop and could not be re-used. To reduce this time, abstraction libraries were built to make it possible to run these applications on similar platforms. These abstraction layers, however, were still limited to broader types of platforms e.g. Linux, Unix, Windows, Mac. These platform libraries could now be maintained and distributed separately. This led to easier development and applications that could be used on more systems.
+% Monolithic and libraries
+Over the years, the way we use code has evolved with the changing need of the users and society as a whole~\cite{rajlich2014software}. This evolution started with specific applications written for each use case and each platform it had to run on. These monolithic applications took a lot of time to develop and could not be re-used. To reduce this time, system libraries were built to make it possible to run these applications on similar platforms. This abstraction layer, however, was still limited to broader types of platforms e.g. Linux, Unix, Windows. These shared system libraries could now be maintained and distributed separately. This led to easier development and applications that could be used on more systems.
 
-The Debian package system is a good example of the beginning of this evolution. It made it possible for code that was meant to be used as a library to be packaged separately for both system and user code. This allowed applications to indicate which library would be requirement for the application and the system would make sure it is available to the application. This possibility allowed these applications to be developed faster~\cite{zacchiroli2011debian}.
+% Example
+The Debian package system is a good example of this evolution. It made it possible for code that was meant to be used as a library to be packaged separately for both system and user code. This allowed applications to indicate which library would be required for the application and the system would make sure it is available to the application. This possibility allowed these applications to be developed faster. ~\cite{zacchiroli2011debian}
 
-These new code libraries provided a lot of benefit and speed to application developers, but to improve the ecosystem further a new step had to be made. At this point when applications were distributed they were static. There was no option to adapt the application to include features that the user would like. Also, users that wanted to add their own functionality had to go through the developers to accomplish this. To solve this, larger application began to include plugin systems. A plugin system allows different parts of the code to be changed or to add functionality to the application. This paradigm allowed rapid development of extra features by both developers and the users of the application.
+% Plug-ins
+% In computing, a plug-in (or plugin, add-in, addin, add-on, or addon) is a software component that adds a specific feature to an existing computer program. When a program supports plug-ins, it enables customization. to enable third-party developers to create abilities which extend an application, to support easily adding new features, to reduce the size of an application, to separate source code from an application because of incompatible software licenses.
 
-A very early example of a program with a plugin system is Winamp. The Winamp developers used a plugin system to provide users with a customisable package that could serve each user's preference. A large community formed around the application with different plugins for every imaginable feature. This was the start of the plugin community.
+These new shared code libraries provided a lot of benefits and speed to application developers, but to improve the ecosystem further a new step had to be made. At this point when applications were distributed they were static. There was no option to adapt the application to include features that the user would like. Also, users that wanted to add their own functionality had to go through the developers to accomplish this. To solve this, the larger applications began to include plug-in systems. A plug-in system allows specific functionality to be added to an existing computer program. This enabled customization of applications, making it possible to reduce the size of the core application or separating source code because of incompatible licenses. This paradigm allowed the rapid development of extra features by both developers and the users of the application.
 
-When the whole application movement started to go to the web, this same plugin paradigm started to exist. These plugins allowed external parties to add functionalities to some of the biggest websites. A good example of this is Facebook plugins. Even now when Facebook is in a decline, people still actively use and rely on plugins hosted on Facebook.
+% Example
+A well known example of a program with a plugin system is Winamp. The Winamp developers used a plug-in system to provide users with a customizable package that could serve each user's preference~\cite{nullsoft1999winamp}. A large community formed around the application with different plug-ins for every imaginable feature~\cite{winampcommunity}. This community building gave an incentive for other applications to implement similar plug-in systems.
 
-This code re-use continued when web application started to use the micro-services architecture. This allowed web application to move towards modules that had very small tasks that they were specifically designed for. This facilitated code re-use on a big scale with platforms like NPM and reusable web components.
+% Cross-platform applications
+% software written in an interpreted language or pre-compiled portable bytecode for which the interpreters or run-time packages are common or standard components of all platforms
+Eventually programming languages were created that allowed the development of cross-platform applications that could be run on all common platforms. This eliminated the need to create separate binaries for each individual platform. These applications were either written in an interpreted language, e.g. Python, or in a pre-compiled portable byte-code format for which interpreters exist on all platforms, e.g. Java. In the last decade, a major part of these cross-platform applications have moved towards the web. These new web applications make use of existing cross-compatibility of web technologies, that were designed when the web became universal, that run on all platforms.
 
-The decentralised application community eventually also started to work on modular applications in the form of smart contracts. Ethereum is a good example of this movement.
+%  Code frameworks e.g. Spring, Wordpress, Android
+With the development of cross-platform applications, there was also a rise in the availability of code frameworks. A code framework provides particular functionality as part of a larger software platform to facilitate development of software applications. Software with common use-cases could make use of the abstraction provided by these code frameworks to create application-specific software with only limited additional user-written code. These code frameworks can be seen everywhere nowadays. Some examples of code frameworks are: Spring, WordPress, and the Android platform. Spring is a popular code framework for developing applications in Java. WordPress is a web framework that runs more than 25\% of the websites on the internet~\cite{ewer201414}. The Android platform is the underlying framework that allows apps to be created for the Android mobile operating system.
 
-\section{Code re-use}
+% Micro-services
+% collection of loosely coupled services
+A more recent concept in the development of software applications is the microservice architecture. This architecture breaks an application up into a collection of loosely coupled services. These services are normally small in size and have one use-case that they were specifically designed for~\cite{thones2015microservices}. This architecture facilitates code re-use on a big scale with platforms like NPM (Node Package Manager) storing over 750.000 JavaScript packages~\cite{npmstatistics}.
+
+\section{Code Re-use}
 
 The constant factor during this code evolution is code re-use. The ability to make development easier and faster by making use of existing solutions already created by a different party.
 
-Reuse is software development’s unattainable goal. The ability to put together systems from reusable elements has long been the ultimate dream. Almost all major software design patterns resolve around extensibility and re-use. Even the majority of architectural trends aim for this concept. Despite many attempts in almost every community, projects using this approach often fail~\cite{reusedreamdead}.
+% We want re-use so badly, yet our failures are spectacular. Almost all major technology trends of the past 20 years touts reuse as the saving grace. Vendors have sold billions of dollars in software through the broken promise of increased reusability. https://dzone.com/articles/reuse-dream-dead
+Re-use is software development’s unattainable goal. The ability to put together systems from re-usable elements has long been the ultimate dream. Almost all major software design patterns resolve around extensibility and re-use. Even the majority of architectural trends aim for this concept. Despite many attempts in almost every community, projects using this approach often fail~\cite{reusedreamdead}.
+%In general, the more reusable we choose to make a software component, the more difficult that same software component is to use. In the extreme, an infinitely reusable component is infinitely difficult to use. Dealing with the tension between re-use and use is a complex issue, and often, we fail. Largely, the problem has to do with dependencies.
+This is often attributed to one big problem: usability. The more reusable we try to make a software component, the more difficult it becomes to work with said component. This is a critical balance that needs to be worked on.
 
-% We want reuse so badly, yet our failures are spectacular. Almost all major technology trends of the past 20 years touts reuse as the saving grace. Vendors have sold billions of dollars in software through the broken promise of increased reusability.
+\subsection{Re-usability vs Usability}
+%The challenge we run into when attempting to create a highly reusable component is to manage the tension between reusability and useability. In our example above, breaking out the coarse-grained component into fine-grained components makes it more difficult to use each of the resulting fine-grained components. Likewise, creating a lightweight component makes using the component more difficult since the component must be configured each time the component is used.
+%
+%Fine-grained components have more component dependencies and lightweight components have more context dependencies. Each makes a component more re-usable, but also more difficult to use. The key is to strike a balance, and that is a topic for another day not too far away.
 
-% https://dzone.com/articles/reuse-dream-dead
+The challenge we face when creating a highly re-usable component is to find this balance between re-usability and usability.
 
-This is often attributed to one big problem: usability. The more reusable we try to make a software component, the more difficult it becomes to work with said component. This is a critical balance that needs to be worked on. The largest part of this problem has to do with dependencies.
-
-%In general, the more reusable we choose to make a software component, the more difficult that same software component is to use. In the extreme, an infinitely reusable component is infinitely difficult to use. Dealing with the tension between reuse and use is a complex issue, and often, we fail. Largely, the problem has to do with dependencies.
-
-\section{Re-usability vs usability}
-The challenge we face when creating a highly reusable component is to find this balance between re-usability and usability.
-
-To make a component more reusable it needs to be broken down in smaller parts, that each handle only one task. Components with multiple tasks are harder to reuse since each application has different use cases and therefore has to modify and maintain there own version of that component. Smaller components that handle only one task can be used as building blocks for bigger components making them easier to reuse, saving developers the need for maintaining their own version. However, to create a complex application hundreds of small reusable components would have to be used creating a problem of itself. How are all these components going to be managed. Some aspects to think about are:
+To make a component more re-usable it needs to be broken down in smaller parts, that each handles only one task. Components with multiple tasks are harder to re-use since each application has different use cases and therefore has to modify and maintain there own version of that component. Smaller components that handle only one task can be used as building blocks for bigger components making them easier to re-use, saving developers the need for maintaining their own version. However, to create complex application hundreds of small re-usable components would have to be used creating a problem of itself. How are all these components going to be managed? The largest part of this problem has to do with dependencies~\cite{reusedreamdead}, an additional piece of code a programmer wants to call. Some aspects to think about are:
 \begin{itemize}
 	\item Is the API (Application Programming Interface) going to stay constant?
 	\item How do we deal with breaking changes?
 	\item How do we prevent dependency conflicts?
 \end{itemize}
 
-Some of these aspects are already being addressed e.g. Semantic versioning, but most of these are still unsolved today.
+\noindent Some of these aspects are already partly being addressed through Semantic versioning~\cite{preston2013semantic}, but most of these are still unsolved today.
 
-For something to be reusable it also needs to have a default un-configured state. If the configuration of the original author would be included in the component itself it would make the component less reusable. However, if each small component has to be configured each time it is used, application would become less usable for the developers making them.
+The context dependability of a component also greatly affects the balance between re-usability and usability. When a component depends on the context it is running in, it makes it impossible to move it to an different environment that does not have this context. For components to be more re-usable, this context has to be moved from code to configuration. However, if each small component has to be configured each time it is used, the application would become less usable.
 
-%The challenge we run into when attempting to create a highly reusable component is to manage the tension between reusability and useability. In our example above, breaking out the coarse-grained component into fine-grained components makes it more difficult to use each of the resulting fine-grained components. Likewise, creating a lightweight components makes using the component more difficult since the component must be configured each time the component is used.
-%
-%Fine-grained components have more component dependencies and lightweight components have more context dependencies. Each makes a component more reusable, but also more difficult to use. The key is to strike a balance, and that is a topic for another day not too far away.
+Both the granularity and the degree of dependability on the context can improve the re-usability at the cost of usability. The key is to find a balance.
 
-\section{Modules vs Plug-ins}
+\newpage
 
-There are two different kinds of reusable components that often can be integrated into applications: modules and plug-ins.
+\section{Component Terminology} % Modules vs Plug-ins
+
+Two different kinds of reusable components that are often integrated into applications are modules and plug-ins. Since these terms can have a different meaning depending on the application, the interpretation that this work will use is defined below:
 
 \begin{itemize}
-	\item \textbf{Modules} are main functionality components created by core members of the developing team that are used to break-up the application into smaller subsystems that can more easily be worked on with different/larger teams.
-	\item \textbf{Plug-ins} are  community created components used to extend the main functionality of the application by users of the program. These functionalities are often too small or too unique to integrate into the application by the core team. Plug-ins normally don't have full access to all functions within the main application and are therefore limited in their behaviour. They are also tied to a specific application and can not be reused for other applications.
+	\item \textbf{Modules} are main functionality components that are used to break up the application into smaller subsystems that can more easily be worked on with different/larger teams. Modules can either by re-usable components or tied to the specific application, and should be able to operate independently
+	\item 
+	% Plug-ins depend on the services provided by the host application and do not usually work by themselves. Conversely, the host application operates independently of the plug-ins, making it possible for end-users to add and update plug-ins dynamically without needing to make changes to the host application
+	\textbf{Plug-ins} are components used to extend the main functionality of the application without having to make changes to it. They are often created by the community of the application. The functionality in these plug-ins are often too small or too unique to integrate into the core application. Plug-ins depend on the services provided by the application, they do not operate independently. They are also tied to a specific application and can not be re-used for other applications.
 \end{itemize}
 
-The function of both kinds of components are, however, not different. They both provide a (small) piece of extra functionality to the application. It would therefore also make sense to both make them first-class citizens of the application instead of making plug-ins a secondary operator.
+\noindent The function of both kinds of components is, however, not different. They both provide extra functionality to the application. It would therefore also make sense to both make them first-class citizens of the application instead of making plug-ins a secondary operator.
 
-This distinction is often made to differentiate between the code of the original authors and code submitted by third-parties. These plug-ins are most of the time also not reviewed by the original authors of the project.
+This distinction is often made to differentiate between the code of the original authors and code created by third-parties. Plug-ins are most of the time also not reviewed by the original authors of the project.
 
-\section{Dependency}
-A dependency is additional code a programmer wants to call. Adding a dependency avoids repeating work: designing, testing, debugging, and maintaining a specific
-unit of code. In this thesis, that unit of code is referred to as a module; some
-systems use the terms library and package instead. 
-
+% https://student.unsw.edu.au/introductions
 \section{Research Goal}
+
+% What is done, what is missing?
+Over the last couple decades, extensive research has been performed into the field of software re-use. In this period, several survey studies have been done to see what different approaches were used in research literature for creating re-usable software~\cite{krueger1992software}~\cite{frakes2005software}. The surveys tried to make generalizations about the methods used to research if there is a common pattern among them. The approaches mostly centered around re-using code for common use-cases like code frameworks. 
+
+Other studies have worked on designing metrics and models for measuring progress in software re-use to identify the most effective strategies~\cite{frakes1996software}. Morisio et al looked at success and failure factors in software re-use to identify key factors in its adoption~\cite{morisio2002success}. The main cause of failures that they discovered was a lack of commitment by companies and projects.
+
+A more recent study, attempted to build a framework for highly modular and extendable software systems, called Normalized System theory. This theory is based on a theoretical concept called system theory. This theory, however, takes the abstraction of modules to a level that makes it inefficient beyond usage. It takes this approach to make the system more agile. However, without simplicity all agility is lost. ~\cite{de2018enabling}
+
+%Normalized System theory == purist, holy grain and therefore inefficiency beyond usage. Too complex. 
+
+Lehman's laws of software evolution is a law describing the evolution of software. The law describe a balance between forces driving new developments on one hand, and forces that slow down progress on the other hand~\cite{lehman1980programs}~\cite{lehman1997metrics}~\cite{herraiz2013evolution}. One of the forces that slows down the progress of new developments is the ability of developers using the development to understand and easily use the functionality of the development.
+
+%Explain the scientific situation related to your topic - you can include the most important scientific articles and briefly explain them and how they are related to your research. 
+% Discuss current situation/gap, explain why further research is necessary
+% why (personal interest and interest for general use)
+% - Another attempt at holy Grail of software re-usability
+
+In the current research there exits a gap in balance between re-usability and usability. This works tries to fill that gap. Many people have tried solving the problem of software re-use, but it has proven to be a hard problem. There needs to be a trade-off between re-usability and usability.
 
 This thesis focuses its work on developing a framework that continues the progression in the development of re-usable code. It tries to find a balance between the software practices of Today and the impractical concepts of the future.
 
@@ -120,43 +103,16 @@ There have already been many attempts to solve the goal of practical code re-usa
 
 \begin{itemize}
 	\item How to find a trade-off between re-usability and usability?
-	\item How to minimize the risk associated with the use of dependencies?
-	\item How to ensure dependency availability in an efficient and secure manner?
+	%\item How to minimize the risk associated with the use of dependencies?
+	\item Can we use social trust and crowdsourcing to improve security of libraries
+	\item How to ensure dependency availability efficiently and securely?
 	% includes updates, trustability
 	% NPM packages were deleted, but a lot of applications depended on this dependency
 \end{itemize}
 
-%why (personal interest and interest for general use)
-%Another attempt at holy Grail of software re-usability
+%contribution to the field (aim/goal)
 
-%how (structure/method of the research)
+%how (structure/method of the research) / methodology
+The rest of this document is outlined as follows: Chapter 2 will go further into the problems that this thesis tries to solve. Chapter 3 will discuss the solution proposed to solve the problems mentioned in Chapter 2. Chapter 4 will discuss the proof-of-concept implementation. Chapter 5 will evaluate the proposed framework against existing solutions. We use a concrete use-case driven methodology to advance the cause of software re-usability. 
 
-The rest of this document is outlined as follows: in Chapter 2 will go further into the problems that this thesis tries to solve. In Chapter 3 will discuss the solution proposed to solve the problems mentioned in Chapter 2. In Chapter 4 will discuss the proof-of-concept implementation. In Chapter 5 will evaluate the proposed framework against existing solutions.
-
-%what is done, what is missing
-%Paper, social trust can be used for running platform
-%Explain the scientific situation related to your topic - you can include the most important scientific articles and briefly explain them and how they are related to your research
-%contribution to field (aim/goal)
-
-%--------
-%
-%evolution of code modularization
-%debian > plugins > websites > micro services > smart contracts
-%
-%--------
-%
-%Over the years, the way we use code has evolved with the changing need of the users and the society as a whole. This evolution started off with specific applications written for each use case and each platform it had to run on. These application took a lot of time to develop and could not be reused. To reduce this time, abstraction libraries were built to make it possible to run these applications on similar platforms. These abstraction layers, however, were still limited to broader types of platforms e.g. Linux, Unix, Windows, Mac. The platform libraries could now be maintained and distributed separately. This led to easier development and application that could be used on more systems.
-%
-%The Debian package system is a good example of the beginning of this evolution. It made it possible for code that was meant to be used as a library to be packaged separately for both system and user code. This allowed applications to indicate which library would be requirement for the application and the system would make sure it is available to it. This possibility allowed applications to be developed even faster.
-%
-%These new code libraries provided a lot of benefit and speed to application developers, but to improve the ecosystem further a new step had to be made. At this point when applications were distributed they were static. The was no option to adapt the application to include features that the user would like. Also users that wanted to add there own functionality had to go through the developers to accomplish this. To solve this, larger application began to include plugin systems. A plugin system allows different parts of the code to be changed or to add functionality to the application. This paradigm allowed rapid development of extra features by both developers and the users of the application.
-%
-%A very early example of a program with a plugin system is Winamp. The Winamp developers used the plugin system to provide users with a customisable package that could serve each user's preference. A large community formed around the application with different plugins for every imaginable feature. This was the start of the plugin community.
-%
-%When the whole application movement started to go to the web, this same plugin paradigm started to exist. These plugins allowed external parties to add functionalities to some of the biggest websites. A good example of this is Facebook plugins. Even now when Facebook is in a decline, people still actively use and rely on plugins hosted on Facebook.
-%
-%This modularization continued when web application started to use the micro-services architecture. This allowed web application to move towards modules that had very small tasks that they were specifically designed for. This facilitated code reuse on a big scale with platforms like NPM and reusable web components.
-%
-%The decentralised application community eventually also started to work on modular applications in the form of smart contracts. Ethereum is a good example of this.
-%
-%this thesis presents a new paradigm for trustworthy computing. We build on the large body of work around smart contracts and make it more generic, scalable, removed global consensus, and need for oracles. It represents the next step in the continued evolution of computing models.
+% - show the viability of our ideas with a non-trivial use-case
