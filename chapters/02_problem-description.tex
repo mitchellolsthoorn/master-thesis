@@ -13,7 +13,7 @@ There should be no difference between modules and plug-ins. Each user can also c
 
 This framework attempts to solve the problems that exist in the software practices of today. One of these software practices is the microservice architecture. This architecture like explained in the introduction breaks an application up into a collection of loosely coupled services. However, this pattern was specifically designed for maximizing re-usability without taking into account usability~\cite{newman2015building} . Studies have been done into the practical issues that the microservice architecture creates when used in a software application~\cite{dragoni2017microservices}. Examples of these issues are the manageability of packages on NPM, no explicit dependencies, interfaces that are not well defined. The architecture makes use of completely decoupled services that communicate through REST APIs. This interface, however, limits the type of communication that can be send between the nodes.
 
-Smart contracts, in particular, Euthereum is another software practice used today, to solve the problem of code re-usability. However, since Euthereum is based on a proof-of-work principle, it requires payment so execute actions on the system. This will make applications build on top of Euthereum subject to these charges. In many cases these charges will have the consequence that the application would be to expensive to use in practice. The Ethereum model is not long-term sustainable
+Smart contracts, in particular, Ethereum is another software practice used today, to solve the problem of code re-usability. However, since Ethereum is based on a proof-of-work principle, it requires payment so execute actions on the system. This will make applications build on top of Ethereum subject to these charges. In many cases these charges will have the consequence that the application would be to expensive to use in practice. The Ethereum model is not long-term sustainable
 %Euthereum (smart contracts)
 %https://medium.com/moatcoin/eth-gas-26d221c5c4c2
 %IPv8 runtime model versus Ethereum fundamental brokenness (e.g. scalability and cost). :
@@ -23,13 +23,17 @@ Smart contracts, in particular, Euthereum is another software practice used toda
 %"Trustchain does not have a native cybercurrency such as Ethereum, it provides a transaction recording ledger". 
 %cite: https://medium.com/moatcoin/eth-gas-26d221c5c4c2
 
-\section{Decentralized}
+\section{Requirements}
+
+Requirements for our envisioned runtime engine are as follows
+
+\subsection{Decentralized}
 No central entity or central governance should be in control of the network. The network should be owned by everybody and nobody. The system should have no central servers except for bootstrapping. 
 
-\section{Self-governing}
+\subsection{Self-governing}
 The system should be able to run on its own without supervision. As there is no parent governing entity. The system should be able to handle all tasks needed for operating the network by itself.
 
-\section{Trustworthy Code}
+\subsection{Trustworthy Code}
 
 %https://harry.garrood.me/blog/malicious-code-in-purescript-npm-installer/
 %https://lwn.net/Articles/740157/
@@ -39,19 +43,19 @@ The system should be able to run on its own without supervision. As there is no 
 
 Since this work is proposing a framework that is highly dependent on re-usable code, it is important that the user running the application can trust all its parts. This trust aspects is very important for a code execution ecosystem. There are many examples of application being compromised by running untrusted code~\cite{purescript}\cite{docker}.
 
-\subsection{Open Ecosystem}
+\subsubsection{\textbf{Open Ecosystem}}
 For a user to trust the application it wants to run, it also needs to trust the framework running it. That is why it is important that every part of the code execution ecosystem is open for inspection. Making the source code public allows users or external parties to verify the behavior of the system. 
 
 Next to opening up the framework for inspection, it is also of vital importance that each re-usable component used within the framework is able to be inspected to increase the trustworthiness of the code.
 
-\subsection{Crowdsourcing}
+\subsubsection{\textbf{Crowdsourcing}}
 DevID is a previous work of the authors of this thesis. It evaluates the possibility of using social trust as a way to increase the trustworthiness of code by using crowdsourced peer-review~\cite{de2019devid}.
 
 Cargo Crev is a cryptographically verifiable code review system for the cargo (Rust) package manager~\cite{cargocrev}. It lets users cryptographically sign packages when they have deemed them to be safe.
 
 Both of these systems make use of crowdsourcing to minimize the risk of users running undesired malicious code. This is a very important property, since manually inspecting all code running in an application can take a lot of time. By crowdsourcing this task to other individuals, the trustworthiness might be lower compared reviewing it yourself. However, because the code review is crowdsourced to many different individuals, the eventual trustworthiness of the code will be higher.  
 
-\subsection{Dependencies}
+\subsubsection{\textbf{Dependencies}}
 The current dependency trend is risky, developers trust more code with less justification for doing so. Since the recent explosion of code re-use systems, application have started shifting to using more and more existing libraries in the form of dependencies. This rapid shift, however, has caused developers to take along their perspective on code trustworthiness of classical dependencies like OS system libraries. The trust-ability of these new libraries is not as obvious as most developers believe.
 
 H2020 FASTEN is a project that strives to minimize the risk associated with using dependencies~\cite{fasten}. It solution for this problem is performing static analysis of the code and creating a dependency graph. With this dependency graph, changes to the dependency can be detected. This allows inspection of the code that would be affected by this change.
@@ -60,33 +64,33 @@ When using dependencies without inspection, applications risk running code that 
 
 Although Semantic Versioning is a system designed to indicate to developers when breaking changes have been made to the dependency, the system is not being used properly according to recent studies~\cite{raemaekers2014semantic}~\cite{raemaekers2017semantic}. Raemaekers et al, found that backward-incompatible changes are widespread in software libraries.
 
-\subsection{Trust Function}
+\subsubsection{\textbf{Trust Function}}
 Trustworthy code is a cornerstone in software development. However, how is trust defined? Trust is a social notion. One person might need more or less information to trust a particular piece of code than another person. This is highly dependent on the social constructs of the user. Therefore, trust shouldn't be a fixed concept. Each user should be able to define a trust function that is used to determine if a dependency should be used or not.
 
-\section{Runtime Engine}
+\subsection{Runtime Support}
 
-To run an application, composed of modules, inside the code execution framework, a runtime engine is needed. This runtime engine is responsible for all tasks related to running of modules.
+A key bottleneck for re-usability and usability is the lack of runtime support within the execution environment.
 
-\subsection{Integrated autonomous dissemination}
+\subsubsection{\textbf{Integrated Autonomous Dissemination}}
 
 Centralized systems store all code libraries in one or multiple central locations. These locations require a lot of infrastructure which is not free. Besides this, they also have a few downsides. One of these downsides is that these locations are susceptible to influence of governments. They can be blocked or shutdown when the government feels like the platform is not complying with its laws. Decentralized systems do not have this disadvantage. Another disadvantage of centralized library storage is that any library made by revoked at any time.
 
 A system that has integrated autonomous dissemination of code libraries through decentralized methods, can not be controlled from outside the system. It also allows everything to be done from inside the framework making is easier to use.
 
-\subsection{Dynamic Loading}
+\subsubsection{\textbf{Dynamic Loading}}
 
 For the code execution framework to be easy to use, the user should not have to restart the application or load applications into the framework. This should be done automatically on-demand by the framework. Dynamic loading would also make sure that only the application that should be running are loaded into the system, so that unused applications will not waste computer resources.
 
 %https://pyrasite.readthedocs.io/en/latest/GUI.html
 %https://en.wikipedia.org/wiki/Kpatch
 
-\subsection{Seamless Upgrading}
+\subsubsection{\textbf{Seamless Upgrading}}
 
 Updating of dependencies is very important. Outdated dependencies that contain security exploits can seriously harm the system it is running on. So when a new version of a dependency is available on the network, it should automatically be distributed to all nodes that run applications depending on that dependency. There should be no user action required for the updating to happen. Once the dependency is available on the host computer, it should do an in-place replacement of the dependency in the framework.
 
 A similar system has been proposed by Rellermeyer et al for Java OSGi modules~\cite{rellermeyer2008consistently}. In this paper, they devise a mechanism to extend the default functionality of OSGi modules to make it possible to upgrade them when used in a distributed method.
 
-\subsection{Module Interconnect}
+\subsubsection{\textbf{Module Interconnect}}
 
 For applications to be built up out of modules, there has to be a way for modules to find each other and to communicate with each other. The way this connection is constructed is very important, since the code execution architecture defines the maximum complexity of the code that can be produced. JVM, Nodejs, CPAN perl modules and other real-world framework and the connection between modules determine the Maximum Complexity of Applications (MCA) which a single company, an global consortium, or open source community can create. We devised the first architecture to take the MCA as the cardinal design optimisation. Science what defines MCA? What constrains/boosts MCA? The interconnection fabric is the key determinant for the MCA. How data flows between modules, how the future-proofing is arranges, how any piece of code can interconnect with any other code, and how can we devise the universal module interconnector?
 
