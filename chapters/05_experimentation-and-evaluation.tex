@@ -10,9 +10,24 @@
 %   - pure technical (module loading times, memory usage impact, event-driven impact, event processing workload analysis, peak performance estimation)
 %   - Github/NodeJS/Debian replacement workload analysis ("github is the largest code host in the world, with 20 million users and more than 57 million repositories"
 
-This chapter will propose an experiment and evaluate the framework described in Section~\ref{sec:design}. The evaluation will be performed based on the result gathered from the experiment.
+This chapter will propose an experiment and evaluate the framework described in Section~\ref{sec:design}. The evaluation will be performed based on the result gathered from the experiment. This evaluation will be performed on a real-world non-trivial use-case. This use-case comes from a project called Tribler.
 
-\section{Experiment}
+\section{Tribler}
+
+Tribler is an open-source community driven decentralized BitTorrent client being developed and researched at the Delft university of Technology. Its main feature is that is allows anonymous peer-to-peer communication by default. It is built on the underlaying network library IPv8, also being worked on by the same group.
+
+Besides handling the tasks of a standard BitTorrent client, Tribler also makes it possible to:
+
+\begin{itemize}
+	\item \textbf{Search for content: } allowing the program to operate independently of external content search providers that could be blocked and maked it immune to limiting external actions such as legal constraints. Which is happening more frequently nowadays.
+	\item \textbf{Torrent anonymously: } routing torrent traffic through anonymized tunnels that operate using the same principle as the TOR stack. Providing pseudo-anonymity for the two end and other observing parties.
+	\item \textbf{Accumulate trust: } all torrenting metadata is stored in a way that is not linked to an physical identity or an IP address. This data is then translated into a trust score by calculating the ratio between the amount of traffic communicated across the network. A positive seed ratio (the ratio between uploading content and downloading content) indicated a positive trust value.
+	\item \textbf{Trade trust: } With this trust system it is possible to prioritize or refuse services for particular users. To increase the incentive for having a large seeder network and therefore a high trust value, Tribler allows users with a large amount of uploaded content to exchange this gathered trust for currency on the built-in marketplace inside the Tribler application.
+\end{itemize}
+
+This trust value, expressed as reputation inside the Tribler application, can be described as an up- and download currency in a reputation-based peer-to-peer network. When a peer uploads more than it downloads, the reputation of that peer increases, and the peer can download more effectively.
+
+\section{Trust Experiment}
 
 The experiment consists out of conducting a use-case study, by creating a fully functioning example that demonstrates the composition and construction of an application with interchangeable trust models. This application will consist out of 6 components:
 
@@ -25,7 +40,7 @@ The experiment consists out of conducting a use-case study, by creating a fully 
 	\item Transport engine (infrastructure layer)
 \end{itemize}
 
-Figure~\ref{fig:experiment} shows an overview of the example application. The domain of trust was chosen since this is a very interesting use-case that has not been explored yet in other works. It allows users of a system to define their own notion of the concept of trust and apply this to their system without requiring extensive knowledge about each application they are using. For this experiment, this work makes use of two different trust algorithms: Netflow and PimRank. These two algorithms act as an exampl for this experiment.
+Figure~\ref{fig:experiment} shows an overview of the example application. The domain of trust was chosen since this is a very interesting use-case that has not been explored yet in other works. It allows users of a system to define their own notion of the concept of trust and apply this to their system without requiring extensive knowledge about each application they are using. For this experiment, this work makes use of two different trust algorithms: Netflow and PimRank. These two algorithms act as an example for this experiment.
 
 \begin{figure}[h]
 	\centering
@@ -33,7 +48,7 @@ Figure~\ref{fig:experiment} shows an overview of the example application. The do
 	\caption{\label{fig:experiment}}
 \end{figure}
 
-\section{Mobile App}
+\section{Mobile App Experiment}
 
 To test the robustness and the flexibility of the framework, an experiment was performed to try to create a proof-of-concept prototype of an Android application that could run the same stack of code to extend the ecosystem to mobile platforms. Since the two major mobile platforms (Android, iOS) only run applications custom made for these platforms, different methods had to be explored. Because iOS has a very restricted development environment and strict security policies, this route was not further explored.
 
@@ -53,41 +68,89 @@ To package the executable code in a way that would not trigger the Android secur
 
 In Figure~\ref{fig:android-app} a screenshot can be seen of the framework running with a test dApp on the Android platform. Development was stopped after reaching the proof-of-concept stage as it is not the main goal of this work and the development cycle is very tedious and slow. Each time a change or addition is made to the Framework the entire app structure has to be rebuild. This process can take up to 20 minutes. 
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.5\textwidth]{images/android-app-screenshot.jpg}
-	\caption{\label{fig:android-app}}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%	\includegraphics[width=0.5\textwidth]{images/android-app-screenshot.jpg}
+%	\caption{\label{fig:android-app}}
+%\end{figure}
 
+\section{Evaluation}
 
+To evaluate the platform created, we need to evaluate the individual parts that make up the framework and see if they conform to the requirements set in Chapter 2.
 
-%\section{Tribler}
-%
-%% Project focuses on project called Tribler. Community driven. Big code base.
-%
-%Tribler is an open-source community driven decentralized BitTorrent client being developed and researched at the Delft university of Technology. Its main feature is that is allows anonymous peer-to-peer communication by default. It is built on the underlaying network library IPv8, also being worked on by the same group.
-%
-%Besides handling the tasks of a standard BitTorrent client, Tribler also makes it possible to:
-%
-%\begin{itemize}
-%	\item \textbf{Search for content: } allowing the program to operate independently of external content search providers that could be blocked and maked it immune to limiting external actions such as legal constraints. Which is happening more frequently nowadays.
-%	\item \textbf{Torrent anonymously: } routing torrent traffic through anonymized tunnels that operate using the same principle as the TOR stack. Providing pseudo-anonymity for the two end and other observing parties.
-%	\item \textbf{Accumulate trust: } all torrenting metadata is stored in a way that is not linked to an physical identity or an IP address. This data is then translated into a trust score by calculating the ratio between the amount of traffic communicated across the network. A positive seed ratio (the ratio between uploading content and downloading content) indicated a positive trust value.
-%	\item \textbf{Trade trust: } With this trust system it is possible to prioritize or refuse services for particular users. To increase the incentive for having a large seeder network and therefore a high trust value, Tribler allows users with a large amount of uploaded content to exchange this gathered trust for currency on the built-in marketplace inside the Tribler application.
-%\end{itemize}
-%
-%This trust value, expressed as reputation inside the Tribler application, can be described as an up- and download currency in a reputation-based peer-to-peer network. When a peer uploads more than it downloads, the reputation of that peer increases, and the peer can download more effectively.
-%
-%\section{IPv8}
-%
-%IPv8 is the underlying network framework of the Tribler application. It is responsible for providing \textbf{authenticated} and \textbf{encrypted} communication between different peers (computer nodes) in the system. The framework abstracts the notion of physical addresses (IP addresses) in favour of public keys. This removes the need for application that use this framework to keep track of where different peers in the system are and how to move data between them. IPv8 simplifies the design of distributed overlay systems. 
-%
-%Some other important aspects of the framework are its focus on:
-%\begin{itemize}
-%	\item \textbf{Privacy:} where it is possible to choose if messages should be identifiable to all peers in the network or only to the peers absolutely needed for the network connection (doesn't include the receiver). 
-%	\item \textbf{No infrastructure dependency:} allowing the network to function on its own run by the peers using the system. This is a very important aspect of the framework as it allows the framework to support itself, without needing external financing for server capacity.
-%	\item \textbf{NAT traversal:} making it possible to operate the network without static servers needed for overcoming the NAT issues that most peer-to-peer networks face.
-%	\item \textbf{Trust:} one of the most important aspects of peer-to-peer systems, as it is needed to mitigate free-riding issues in the network. In IPv8 trust is gained by recording a patterns of previous actions and storing these on a blockchain structure called TrustChain.
-%\end{itemize}
+One of these components is the module distribution mechanism. To make this platform usable, this mechanism has to perform effective enough without crippling the network with its overhead.
 
-%The last main aspect of the framework is \textbf{extensibility}. IPv8 makes use of a concept called overlays. Where a virtual network is created in the system related to one specific application domain or topic where different peers can subscribe to. This is a very powerful mechanism to allow extendability and modularization of an specific application.
+The next section will evaluate the different distribution mechanism used in the FBase concept and compare them with existing methods.
+
+One of the simplest and easiest approach that can be taken to distribute modules throughout the network is flooding. This is the fastest approach for distributing modules, however, it will create a big strain on the network when then network becomes larger. It also allows malicious nodes to DDOS the network with  lot of ease.
+
+Another approach is crawling. When crawling, nodes asks their neighboring nodes for the modules they have discovered. This approach is much less intensive on the global network as it works on a localized view of the network. This method will eventually create a global coverage for module discovery, however, this method is very slow. Each module has to be propagated through each local view. This method is not suitable for large scale module distribution.
+
+FBase makes use of a voting mechanism to prevent DDOSing while still being able to effectively distribute new modules. It is based on selective flooding. Flooding is a very effective way to reach many nodes connected in a graph as can been seen from the table below. Even when there is a significant overlap in the neighbors of the nodes, large numbers of nodes can be reached in very few steps.
+\begin{table}[h!]
+	\begin{tabular}{l|lllll}
+		\toprule
+		Neighbor overlap & 1     & 2      & 3        & 4           & 5              \\ \midrule
+		0\%              & 1 (0) & 31 (1) & 901 (31) & 26131 (901) & 757801 (26131) \\
+		25\%             & 1 (0) & 24 (1) & 530 (24) & 11662 (530) & 244904 (11662) \\
+		50\%             & 1 (0) & 16 (1) & 241 (16) & 3375 (241)  & 50385 (3375)   \\
+		75\%             & 1 (0)                      & 9 (1)  & 65 (9)   & 392 (65)    & 2289 (392) \\ \bottomrule   
+	\end{tabular}
+\end{table}
+
+If we run the same calculations with the voting mechanism the result are however not as effective. The reason for this is that only a small fraction of all users will vote on a specific module. For the purpose of this evaluation, we will set this percentage at 1\% of all nodes. Even in the most optimistic scenario where there is no neighbor overlap. The discover stops after two steps with 24 nodes being aware of the module as can be seen in row 1 of the table below.
+
+To circumvent this problem FBase has introduced the concept of Random Discovery where multiple starting point (S) for discover are used. This increases the chance for one of these starting point to overcome this barrier. The result for this can be seen in the other rows of the table. However, when applying Random Discovery only when a module is created the discovery process still halts after 6 steps with 101 starting points.
+
+1\% vote and 100\% disconnected
+\begin{table}[h!]
+	\begin{tabular}{@{}l|llllllll@{}}
+		\toprule
+		S & 1     & 2        & 3         & 4         & 5         & 6         & 7     \\ \midrule
+		1   & 1 (0) & 31 (1)   &     &        &           &           &               \\
+		2   & 1 (0) & 62 (1)   & 91 (2)    &     &      &           &               \\
+		3   & 1 (0) & 93 (1)   & 122 (2)   &    &        &           &               \\
+		4   & 1 (0) & 124 (1)  & 153 (2)   & 182 (3)   &    &       &               \\
+		... &       &          &           &           &           &           &             \\
+		11  & 1 (0) & 341 (1)  & 457 (4)   & 486 (5)   &    &       &     \\
+		 &       &          &           &           &           &           &     \\
+		101 & 1 (0) & 3131 (1) & 4059 (32) & 4320 (41) & 4378 (43) & 4407 (44) &  \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+In a more realistic scenario where there would be a 25\% overlap between the nodes, the result would be even less effective.
+
+1\% vote and 25\% disconnected
+\begin{table}[h!]
+	\begin{tabular}{@{}l|llllllll@{}}
+		\toprule
+		S & 1     & 2        & 3         & 4         & 5         & 6         & 7     \\ \midrule
+		1   & 1 (0) & 24 (1)   &     &        &           &           &               \\
+		2   & 1 (0) & 48 (1)   &     &     &      &           &               \\
+		3   & 1 (0) & 72 (1)   & 94 (2)   &    &        &           &               \\
+		4   & 1 (0) & 96 (1)  & 118 (2)   &    &    &       &               \\
+		... &       &          &           &           &           &           &             \\
+		11  & 1 (0) & 264 (1)  & 330 (4)   &    &   &       &     \\
+		... &       &          &           &           &           &           &     \\
+		101 & 1 (0) & 2424 (1) & 2952 (25) & 3062 (30) & 3084 (31) &  &  \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+When the Random Discovery is applied on every vote, however, a continuous discovery can be found with 11 starting points as can be seen in the table below.
+
+1\% vote and 25\% disconnected and direct random discovery
+\begin{table}[h!]
+	\begin{tabular}{@{}l|llllllllll@{}}
+		\toprule
+		S & 1     & 2        & 3         & 4         & 5         & 6         & 7   & 8 & 9  \\ \midrule
+		1   & 1 (0) & 24 (1)   &     &        &           &           &      & &         \\
+		2   & 1 (0) & 48 (1)   &    &     &      &           &         & &      \\
+		3   & 1 (0) & 72 (1)   & 142 (2)(1)   &    &        &           &      & &         \\
+		4   & 1 (0) & 96 (1)  & 166 (2)(1)  & 236 (3)(2)   &    &       &     & &          \\
+		... &       &          &           &           &           &           &      & &       \\
+		11  & 1 (0) & 264 (1)  & 882 (4)(3)   & 1912 (9)(8)  &  3972 (19)(18)  &  8298 (40)(39)     &  13292 (83)(61) &  23592 (133)(111) & ... \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+This approach results in an effective discovery without flooding the network and preventing malicious attempts.
+
