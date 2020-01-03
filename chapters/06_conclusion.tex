@@ -1,1 +1,36 @@
-\chapter{Conclusion}
+\chapter{\label{chap:conclusion}Conclusion}
+
+\section{Conclusion}
+% Essentie/aim herhaal aim
+Re-usability has always been a property software developers have tried to achieve. However, the complexity of applications increases when software is more re-usable. Since this complexity decreases the usability of the software, multiple concepts have failed to successfully implement the re-usable aspect in their software designs.
+
+As software re-use has the potential of high development efficiency, it is still worth pursuing this goal.  The proposed concept strives to find a balance between these two contradicting principles. 
+%Usability is linked with the complexity of applications
+The problem analysis led to the following research aims in developing the conceptual framework FBase:
+% concept
+
+\begin{itemize}
+	\item How to find a trade-off between re-usability and usability?
+	%\item How to minimize the risk associated with the use of dependencies?
+	\item Can we use social trust and crowdsourcing to improve security of libraries?
+	\item How to ensure dependency availability efficiently and securely?
+	% includes updates, trustability
+	% NPM packages were deleted, but a lot of applications depended on this dependency
+\end{itemize}
+
+\noindent The main aim of this research is to find a trade-off between re-usability and usability. This work sets out to achieve this balance by limiting the granularity of re-usable modules to a distinct set of four component types. To further enhance usability, an ecosystem was proposed to mask the negative effects that are associated with re-usability. Previous attempts at solving the re-usability problem have mostly focused on an architectural level in contrast to FBase. By integrating sub-systems into one ecosystem it improves the usability of the framework. 
+
+The secondary aim of the research is to address the corresponding security problems that re-usability creates. The approach, to use social trust and crowdsourcing to improve the security of libraries, was selected as a platform with external dependencies that requires the notion of trusting people. Since trust is a social construct, which can not fully be solved by automated systems, it needs to be gathered from other users. The way to achieve this is by letting the combined expertise of all users in the system determine if a module can be trusted.
+
+The third and last aim of this research is to ensure dependency availability efficiently and securely. An important aspect of dependency management is preventing code alteration in re-usable code during distribution. Another aspect is ensuring that new versions do not introduce security vulnerability to applications using them. Finally, dependencies always need to be available despite changing possible author intentions. Current popular approaches lack the previously mentioned aspects. FBase addresses these aspects by implementing an integrated autonomous discovery and distribution mechanism.
+
+%Making sure that re-usable code remains unaltered during distribution 
+%Another aspect is making sure that new versions do not introduce security vulnerability %to applications using them. Making sure that dependencies are always available despite %changing possible author intentions.
+FBase uses the aforementioned approaches to satisfy the research aim but needs to work and be viable to be considered successful. An evaluation showed that FBase can be used in a non-trivial use-case to increase the flexibility and variety of its use, and improve the manageability of maintenance. The disadvantage, the limitation on the complexity of the interaction between modules, did not limit the development of this use-case but changes the way applications need to be developed.
+
+\section{Discussion}
+% hoofdvraag beantwoorden. 
+The research aims for this project have no singular answer. They form a guideline to approach a problem that has not been solved, despite numerous attempts. This work is making yet another attempt to solve that problem. It has taken into account the successes and failures of previous attempts to improve the current state of the field.
+% balance gevonden
+
+%\section{Recommendations}
