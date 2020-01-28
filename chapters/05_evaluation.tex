@@ -40,14 +40,26 @@ This trust value, expressed as reputation inside the Tribler application, can be
 
 The experiment consists of conducting a use-case study, by creating a fully functioning example that demonstrates the composition and construction of an application with interchangeable trust models. This application will consist of 6 components:
 
-\begin{itemize}
-	\item Test application GUI (view layer)
-	\item Test application (logic layer)
-	\item Trust algorithm 1 (logic layer)
-	\item Trust algorithm 2 (logic layer)
-	\item Execution engine (infrastructure layer)
-	\item Transport engine (infrastructure layer)
-\end{itemize}
+\vspace{0.5cm}
+
+\begin{minipage}[c]{0.45\textwidth}
+	\includegraphics[width=\textwidth]{images/evaluation-trust-experiment-overview2.pdf}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.45\textwidth}
+	{\large\textbf{Componenets:}}
+	\begin{itemize}
+		\item Test Application GUI (view layer)
+		\item Trust Explorer (logic layer)
+		\item Trust Crawler (logic layer)
+		\item Trust Algorithm 1 (logic layer)
+		\item Trust Algorithm 2 (logic layer)
+		\item Execution Engine (infrastructure layer)
+		\item Transport Engine (infrastructure layer)
+	\end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}
 
 %Figure~\ref{fig:experiment} shows an overview of the example application.
 The domain of trust was chosen since this is a very interesting use-case that has not been explored yet in other works. It allows users of a system to define their own notion of the concept of trust and apply this to their system without requiring extensive knowledge about each application they are using. For this experiment, this work makes use of two different trust algorithms: Netflow and PimRank. These two algorithms act as an example for this experiment.
@@ -58,6 +70,33 @@ The domain of trust was chosen since this is a very interesting use-case that ha
 %	\caption{\label{fig:experiment} Trust experiment use-case}
 %\end{figure}
 
+\subsubsection{\textbf{Trustworthiness Experiment (5 stars vs 25 starts)}}
+
+To test the viability of the framework has a whole and its concept of discovery through social trust, this work has performed a trustworthiness experiment to test if the proposed concept is viable for the purpose it is created for.
+
+In this experiment the speed of modules that are distributed through the network are measured through the number of steps it has to make in the discovery algorithm. The experiment was run with a case of 5 stars and a case of 25 stars. The starts of an author represent the trustworthiness. This will influence if other nodes in the network vote on the module.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/trust.pdf}
+	\caption{\label{fig:balance-scale} Trust experiment between 5 starts (red) and 25 stars (blue) authors.}
+\end{figure}
+
+\subsubsection{\textbf{CPU and Memory Breakdown}}
+
+To test if the framework is efficient enough to operate applications running on top of it. This work has performed an experiment to see what the resource usage is of the framework under different scenarios.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/cpu.pdf}
+	\caption{\label{fig:balance-scale} CPU usage of FBase.}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{images/mem.pdf}
+	\caption{\label{fig:balance-scale} Memory usage of FBase.}
+\end{figure}
+
 \subsection{Mobile App Experiment}
 
 To test the robustness and flexibility of the framework, an experiment was performed to try to create a proof-of-concept prototype of an Android application that could run the same stack of code to extend the ecosystem to mobile platforms. Since the two major mobile platforms (Android, iOS) only run applications custom made for these platforms, different methods had to be explored. Because iOS has a very restricted development environment and strict security policies, this route was not further explored.
@@ -66,9 +105,9 @@ The Android platform allows app developers to run Java, Kotlin (Java-based), and
 
 To circumvent this, a un-official method was used to package all the necessary code, dependencies, and executables as a single file and execute this as a C service on the Android platform. To accomplish this, a project called Python-for-Android was used. Python-for-Android is a build script that compiles the desired Python system version and Python dependencies for the ARM platform and creates a directory structure that can be used to run on Android. In Figure~\ref{fig:android-architecture} and overview of the Android app structure can be seen.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.5\textwidth]{images/android-app.png}
+	\includegraphics[width=0.5\textwidth]{images/evaluation-android-app.pdf}
 	\caption{\label{fig:android-architecture} Android app architecture.}
 \end{figure}
 
@@ -85,6 +124,47 @@ Development was stopped after reaching the proof-of-concept stage as it is not t
 %    \includegraphics[width=0.5\textwidth]{images/android-app-screenshot.jpg}
 %    \caption{\label{fig:android-app}}
 %\end{figure}
+
+\subsection{Efficient Cross-platform GUI}
+
+\begin{figure*}[h!]
+	\centering
+	\begin{subfigure}[t]{.69\textwidth}
+		\centering
+		\captionsetup{width=.9\linewidth}
+		{\includegraphics[width=0.95\linewidth]{images/gui-pc.png}}
+		\caption{PC.}
+		\label{fig:shared-library}
+	\end{subfigure}\hfill%
+	\begin{subfigure}[t]{.31\textwidth}
+		\centering
+		\captionsetup{width=.9\linewidth}
+		\includegraphics[width=0.95\linewidth]{images/gui-mobile.png}
+		\caption{Mobile.}
+		\label{fig:plugin}
+	\end{subfigure}\vspace{0.5cm}\hfill%
+	\caption{The graphical user interface of the FBase framework running on multiple device types.}
+	\label{fig:evolution}
+\end{figure*}
+
+\newpage
+		
+\subsection{LOC Breakdown}
+
+\begin{table}[ht!]
+	\begin{tabular}{@{}llll@{}}
+		\toprule
+		&           & LOC    \\ \midrule
+		FBase:   &           &        5029     \\
+		& Discovery Protocol & 646    \\
+		& Transport Mechanism& 140   \\
+		& Runtime Engine    & 1134     \\
+		Android: &           &  93285           \\
+		& App       & 2157  \\ 
+		& MP3 Package& 50584\\
+		& MP3 Builder & 1722 \\ \bottomrule
+	\end{tabular}
+\end{table}
 
 \subsection{Result Interpretation}
 
@@ -114,7 +194,7 @@ FBase makes use of a discovery protocol based on a voting mechanism to prevent D
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.64\textwidth]{images/discovery-flooding.png}
+	\includegraphics[width=0.64\textwidth]{images/evaluation-discovery-flooding.png}
 	\caption{\label{fig:discovery-flooding} Effectiveness of module discovery (flooding).}
 \end{figure}
 %\begin{table}[h!]
@@ -136,7 +216,7 @@ To circumvent this problem FBase uses the concept of Seed Discovery where multip
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.64\textwidth]{images/discovery-fbase-simple-0.png}
+	\includegraphics[width=0.64\textwidth]{images/evaluation-discovery-fbase-simple-0.png}
 	\caption{\label{fig:discovery-fbase-simple-0} Effectiveness of module discovery (FBase without Seed Discovery on every vote, 1\% vote and 0\% neighbor overlap)}
 \end{figure}
 
@@ -160,7 +240,7 @@ In a more realistic scenario where there would be a 25\% overlap between the nei
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.64\textwidth]{images/discovery-fbase-simple-25.png}
+	\includegraphics[width=0.64\textwidth]{images/evaluation-discovery-fbase-simple-25.png}
 	\caption{\label{fig:discovery-fbase-simple-25} Effectiveness of module discovery (FBase without Seed Discovery on every vote, 1\% vote and 25\% neighbor overlap)}
 \end{figure}
 
@@ -186,7 +266,7 @@ When the Seed Discovery is applied on every vote, a continuous discovery can be 
 
 \begin{figure}[ht!]
 	\centering
-	\includegraphics[width=0.64\textwidth]{images/discovery-fbase-extented-25.png}
+	\includegraphics[width=0.64\textwidth]{images/evaluation-discovery-fbase-extented-25.png}
 	\caption{\label{fig:discovery-fbase-extended-25} Effectiveness of module discovery (FBase without Seed Discovery on every vote, 1\% vote and 25\% neighbor overlap)}
 \end{figure}
 
